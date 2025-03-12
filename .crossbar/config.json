@@ -1,0 +1,94 @@
+{
+    "version": 2,
+    "workers": [
+        {
+            "type": "router",
+            "realms": [
+                {
+                    "name": "realm1",
+                    "roles": [
+                        {
+                            "name": "backend",
+                            "permissions": [
+                                {
+                                    "uri": "market.*.ticker",
+                                    "match": "wildcard",
+                                    "allow": {
+                                        "call": true,
+                                        "register": true,
+                                        "publish": true,
+                                        "subscribe": true
+                                    },
+                                    "disclose": {
+                                        "caller": false,
+                                        "publisher": false
+                                    },
+                                    "cache": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "frontend",
+                            "permissions": [
+                                {
+                                    "uri": "market.*.ticker",
+                                    "match": "wildcard",
+                                    "allow": {
+                                        "call": false,
+                                        "register": false,
+                                        "publish": false,
+                                        "subscribe": true
+                                    },
+                                    "disclose": {
+                                        "caller": false,
+                                        "publisher": false
+                                    },
+                                    "cache": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "transports": [
+                {
+                    "type": "web",
+                    "endpoint": {
+                        "type": "tcp",
+                        "port": 8080
+                    },
+                    "paths": {
+                        "/": {
+                            "type": "static",
+                            "directory": "../web"
+                        },
+                        "shared": {
+                            "type": "static",
+                            "directory": "../autobahn"
+                        },
+                        "info": {
+                            "type": "nodeinfo"
+                        },
+                        "ws": {
+                            "type": "websocket",
+                            "serializers": [
+                                "json"
+                            ],
+                            "auth": {
+                                "ticket": {
+                                    "type": "static",
+                                    "principals": {
+                                        "client1": {
+                                            "ticket": "${MYTICKET}",
+                                            "role": "frontend"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
