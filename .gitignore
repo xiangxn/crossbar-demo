@@ -1,2 +1,4 @@
 .DS_Store
 .env
+.crossbar/key.priv
+.crossbar/key.pub

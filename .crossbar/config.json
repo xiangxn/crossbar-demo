@@ -11,8 +11,8 @@
                             "name": "backend",
                             "permissions": [
                                 {
-                                    "uri": "market.*.ticker",
-                                    "match": "wildcard",
+                                    "uri": "",
+                                    "match": "prefix",
                                     "allow": {
                                         "call": true,
                                         "register": true,
@@ -31,13 +31,13 @@
                             "name": "frontend",
                             "permissions": [
                                 {
-                                    "uri": "market.*.ticker",
-                                    "match": "wildcard",
+                                    "uri": "",
+                                    "match": "prefix",
                                     "allow": {
+                                        "subscribe": true,
                                         "call": false,
                                         "register": false,
-                                        "publish": false,
-                                        "subscribe": true
+                                        "publish": false
                                     },
                                     "disclose": {
                                         "caller": false,
@@ -78,11 +78,15 @@
                                 "ticket": {
                                     "type": "static",
                                     "principals": {
-                                        "client1": {
+                                        "backend-nuls": {
                                             "ticket": "${MYTICKET}",
-                                            "role": "frontend"
+                                            "role": "backend"
                                         }
                                     }
+                                },
+                                "anonymous": {
+                                    "type": "static",
+                                    "role": "frontend"
                                 }
                             }
                         }
