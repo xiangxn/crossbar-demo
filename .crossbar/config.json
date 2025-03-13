@@ -88,6 +88,10 @@
                                     "type": "static",
                                     "role": "frontend"
                                 }
+                            },
+                            "options": {
+                                "auto_ping_interval": 30000,
+                                "auto_ping_timeout": 10000
                             }
                         }
                     }
